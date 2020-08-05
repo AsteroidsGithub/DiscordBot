@@ -1,0 +1,34 @@
+{
+    "items": [
+        {
+            "weapons": [
+                {
+                    "Sword": [
+                        {
+                            "name": "Steel Longsword",
+                            "Damage": 8
+                        }
+                    ],
+                    "Bow": [
+                        {
+                            "name": "Longbow",
+                            "Damage": 13
+                        }
+                    ],
+                    "Hammer": [
+                        {
+                            "name": "Number 8 Hammer",
+                            "Damage": 7
+                        }
+                    ],
+                    "Dagger": [
+                        {
+                            "name": "Butterfly Knife",
+                            "Damage": 4
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
