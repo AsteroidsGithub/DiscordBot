@@ -1,37 +1,99 @@
+import requests
+
+import json
+import urllib
+import sys
+import traceback
+import os
+import asyncio
+
 import discord
+from discord import Webhook, RequestsWebhookAdapter
 from discord.ext import commands
 
-client = commands.Bot(command_prefix='?')
+def prefix(bot, message):
+    id = message.guild.id
+    try:
+        return botData[f'{id}']['settings']['prefix']
+    except KeyError:
+        return "!"
 
-class Greetings(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        self._last_member = None
+bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
+botData = json.load(open("data.json", "r"))
 
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        channel = member.guild.system_channel
-        if channel is not None:
-            await channel.send('Welcome {0.mention}.'.format(member))
+botIcon = "https://cdn.discordapp.com/attachments/773578698611752980/775151203381542922/WHIMPLEX.png"
+serverURL = "https://api.mcsrvstat.us/2/whimcraft.xyz"
 
-    @commands.command()
-    async def hello(self, ctx, *, member: discord.Member = None):
-        """Says hello"""
-        member = member or ctx.author
-        if self._last_member is None or self._last_member.id != member.id:
-            await ctx.send('Hello {0.name}~'.format(member))
-        else:
-            await ctx.send('Hello {0.name}... This feels familiar.'.format(member))
-        self._last_member = member
+initial_extensions = ['cogs.levels',
+                      'cogs.moderation',
+                      'cogs.minecraft']
 
-    @commands.command()
-    async def cig(self, ctx, member: discord.Member):
-        """Give a friend a Cigi"""
-        if member == None:
-            await ctx.send(f'{ctx.author.name} gave themselves a Cigi')
-        else:
-            await ctx.send(f'{ctx.author.name} gave {member.name} a Cigi')
+for extension in initial_extensions:
+    print(f"Loaded {extension}")
+    bot.load_extension(extension)
 
-client.add_cog(Greetings(client))
+@bot.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(bot))
+    await bot.change_presence(activity=discord.Game(name='Whimplex.xyz'))
 
-client.run("NzM5OTk2NTg1NTM0MDI5ODI0.Xyilhg.SA89Gj-w2o288X5l7DFjuOQj9qg")
+    for guild in bot.guilds:
+        try:
+            print(botData[f'{guild.id}'])
+        except KeyError:
+            writeServer(bot)
+
+    await writeData()
+
+@bot.event
+async def on_guild_join(guild):
+    botData[f'{guild.id}'] = {
+                "serverName": f"{guild.name}",
+                "serverIcon": f"{guild.icon_url_as(format=None, static_format='png', size=1024)}",
+                "settings": {
+                    "ip": "whimcraft.xyz",
+                    "prefix": "!"
+                },
+                "levels": {
+                }
+            }
+
+async def writeData():
+    while True:
+        await asyncio.sleep(10)
+        with open("data.json", "w") as f:
+            dumped = json.dumps(botData)
+            f.write(dumped)
+            f.close()
+
+async def writeServer(bot):
+    for guild in bot.guilds:
+        try:
+            print(botData[f'{guild.id}'])
+        except KeyError:
+            botData[f'{guild.id}'] = {
+                "serverName": f"{guild.name}",
+                "serverIcon": f"{guild.icon_url_as(format=None, static_format='png', size=1024)}",
+                "settings": {
+                    "ip": "whimcraft.xyz",
+                    "prefix": "!"
+                },
+                "levels": {
+                }
+            }
+
+async def webhookSend(ctx, title, data, thumbnail):
+    webhook = await ctx.channel.create_webhook(name="Minecraft")
+    embed = discord.Embed(title=title, description=data, colour=discord.Colour.blue())
+
+    embed.set_author(name=f"{botData[f'{ctx.channel.guild.id}']['serverName']}",
+                     icon_url=botData[f'{ctx.channel.guild.id}']['serverIcon'])
+
+    if thumbnail != None:
+        embed.set_thumbnail(url=thumbnail)
+
+    await webhook.send(username="Whimplex Bot", avatar_url=botIcon,
+                       embed=embed)
+    await webhook.delete()
+
+bot.run("NzM5OTk2NTg1NTM0MDI5ODI0.Xyilhg.SA89Gj-w2o288X5l7DFjuOQj9qg")
