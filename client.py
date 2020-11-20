@@ -18,13 +18,20 @@ def prefix(bot, message):
         return guildData[f'{id}']['settings']['prefix']
     except KeyError:
         return "!"
-
+    
+token = os.getenv("DISCORD_BOT_TOKEN")
 bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
 
 guildData = json.load(open("data.json", "r"))
-botConfig = json.load(open("bot.json", "r"))
 
-for extension in botConfig['extensions']:
+extensions = [
+    "cogs.levels",
+    "cogs.moderation", 
+    "cogs.minecraft"
+  ]
+
+
+for extension in extensions:
     print(f"Loaded {extension}")
     bot.load_extension(extension)
 
@@ -81,4 +88,4 @@ async def embedSend(ctx, title, data, thumbnail):
 
     await ctx.send(embed=embed)
 
-bot.run(botConfig['token'])
+bot.run(token)
