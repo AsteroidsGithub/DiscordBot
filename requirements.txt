@@ -1,4 +1,4 @@
 discord.py
-datetime.py
-mcrcon.py
-urllib.py
+datetime
+mcrcon
+urllib
