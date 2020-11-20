@@ -31,7 +31,7 @@ for extension in botConfig['extensions']:
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Game(name='Whimplex.xyz'))
+    await bot.change_presence(activity=discord.Game(name='whimplex.xyz on Minecraft 1.16.3'))
     
     await writeServer(bot)
     await writeData()
