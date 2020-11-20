@@ -1,16 +1,16 @@
 import client
-import json
-import urllib
 
-import mcrcon
-from mcrcon import MCRcon
+import mcrcon as mcrcon
+import socket, json, os, shutil, re, urllib
 
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 class minecraftCog(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
+        self.bot = client.bot
         self._last_member = None
 
     @commands.command(name='online')
@@ -30,17 +30,15 @@ class minecraftCog(commands.Cog):
         await client.embedSend(ctx, "Online Players", strdata, None)
         strdata = ""
 
-    @commands.command(name='sendmc')
-    async def sendmc(self, ctx, *, command = None):
+    @commands.command(name='mc')
+    async def mc(self, ctx, *, command = None):
         """Sends commands to the Minecraft server""",
-        try:
-            with MCRcon(f"{client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip']}", f"{client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword']}") as mcr:
-                resp = mcr.command(command)
-                message = f"{command} sent to rcon on {mcr.host}:{mcr.port} with password {mcr.password}"
+        await sock.connect((socket.gethostbyname(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip']), client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPort']))
+        await mcrcon.login(sock, client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword'])
 
-                await client.embedSend(ctx, "Minecraft Commands", message, None)
-        except ConnectionRefusedError:
-            await client.embedSend(ctx, "Minecraft Commands", "Unable to send connection refused", None)
-        
+        await mcrcon.command(sock, command)
+        await sock.close()
+
 def setup(bot):
     bot.add_cog(minecraftCog(bot))
+
