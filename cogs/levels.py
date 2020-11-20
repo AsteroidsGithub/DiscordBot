@@ -42,7 +42,7 @@ class LevelsCog(commands.Cog):
         """Shows you or your friends level on this server"""
         member = member or ctx.author
 
-        await client.embedSend(ctx, f"{member.name}'s Level", f'Hello {member.name}, you have {bot.guildData[f"{ctx.guild.id}"]["levels"][f"{member.id}"]["score"]} points in total and are at level {client.guildData[f"{ctx.guild.id}"]["levels"][f"{member.id}"]["level"]}', member.avatar_url_as(format=None, static_format='png', size=1024))
+        await client.embedSend(ctx, f"{member.name}'s Level", f'Hello {member.name}, you have {client.guildData[f"{ctx.guild.id}"]["levels"][f"{member.id}"]["score"]} points in total and are at level {client.guildData[f"{ctx.guild.id}"]["levels"][f"{member.id}"]["level"]}', member.avatar_url_as(format=None, static_format='png', size=1024))
 
 def setup(bot):
     bot.add_cog(LevelsCog(bot))
