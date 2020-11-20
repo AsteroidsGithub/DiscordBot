@@ -1,4 +1,4 @@
 discord.py
 datetime
 mcrcon
-urllib
+urllib3
