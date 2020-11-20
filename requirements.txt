@@ -2,3 +2,4 @@ discord.py
 datetime
 mcrcon
 urllib3
+requests
