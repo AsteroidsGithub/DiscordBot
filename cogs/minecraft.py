@@ -33,11 +33,11 @@ class minecraftCog(commands.Cog):
     @commands.command(name='mc')
     async def mc(self, ctx, *, command = None):
         """Sends commands to the Minecraft server""",
-        await sock.connect((socket.gethostbyname(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip']), client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPort']))
-        await mcrcon.login(sock, client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword'])
+        sock.connect((socket.gethostbyname(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip']), client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPort']))
+        mcrcon.login(sock, client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword'])
 
-        await mcrcon.command(sock, command)
-        await sock.close()
+        mcrcon.command(sock, command)
+        sock.close()
 
 def setup(bot):
     bot.add_cog(minecraftCog(bot))
