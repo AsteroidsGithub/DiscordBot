@@ -86,6 +86,6 @@ async def embedSend(ctx, title, data, thumbnail):
     if thumbnail != None:
         embed.set_thumbnail(url=thumbnail)
 
-    await ctx.send(embed=embed)
+    await ctx.channel.send(embed=embed)
 
 bot.run(token)
