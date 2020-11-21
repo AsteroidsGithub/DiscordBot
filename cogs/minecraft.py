@@ -1,6 +1,6 @@
 import client
 
-import mcrcon as mcrcon
+from mctools import RCONClient
 import socket, json, os, shutil, re, urllib
 
 import discord
@@ -32,12 +32,13 @@ class minecraftCog(commands.Cog):
 
     @commands.command(name='mc')
     async def mc(self, ctx, *, command = None):
-        """Sends commands to the Minecraft server""",
-        sock.connect((socket.gethostbyname(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip']), client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPort']))
-        mcrcon.login(sock, client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword'])
-
-        mcrcon.command(sock, command)
-        sock.close()
+        """Sends commands to the Minecraft server"""
+        rcon = RCONClient(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip'], port=client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPort'])
+        if rcon.login(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword']):
+            resp = rcon.command(f"{command}")
+            await client.embedSend(ctx, "Minecraft Command Sent", f"sent '{command}' to the mc server", None)
+        else:
+            await client.embedSend(ctx, "Minecraft Command Failed", f"failed to send '{command}' to the mc server", None)
 
 def setup(bot):
     bot.add_cog(minecraftCog(bot))
