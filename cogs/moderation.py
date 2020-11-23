@@ -68,16 +68,15 @@ class moderationCog(commands.Cog):
     async def setprefix(self, ctx, *, prefix):
         """Changes the bot's prefix"""
         await client.embedSend(ctx, f"Prefix changed!",
-                               f"Server prefix changed from {client.guildData[f'{ctx.guild.id}']['settings']['prefix']} to {prefix}",
+                               f"Server prefix changed from {client.guildData['data'][f'{ctx.guild.id}']['settings']['prefix']} to {prefix}",
                                None)
 
-        client.guildData[f'{ctx.guild.id}']['settings']['prefix'] = prefix
+        client.guildData['data'][f'{ctx.guild.id}']['settings']['prefix'] = prefix
 
     @commands.Cog.listener()
     async def on_member_join(self, ctx, member):
         role = member.server.roles['Viewers']
         await member.add_roles(member, role)
-
 
 def setup(bot):
     bot.add_cog(moderationCog(bot))

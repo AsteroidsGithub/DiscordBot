@@ -16,7 +16,7 @@ class minecraftCog(commands.Cog):
     @commands.command(name='online')
     async def online(self, ctx, *, server=None):
         """Shows who's on the Minecraft server"""
-        server = client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip']
+        server = client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip']
 
         existing = await ctx.channel.webhooks()
 
@@ -33,8 +33,8 @@ class minecraftCog(commands.Cog):
     @commands.command(name='mc')
     async def mc(self, ctx, *, command = None):
         """Sends commands to the Minecraft server"""
-        rcon = RCONClient(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['ip'], port=client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPort'])
-        if rcon.login(client.guildData[f'{ctx.guild.id}']['settings']['minecraft']['rconPassword']):
+        rcon = RCONClient(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip'], port=client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPort'])
+        if rcon.login(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPassword']):
             resp = rcon.command(f"{command}")
             await client.embedSend(ctx, "Minecraft Command Sent", f"sent '{command}' to the mc server", None)
         else:

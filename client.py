@@ -2,11 +2,9 @@ import requests
 
 import json
 import urllib
-import sys
-import traceback
-import os
-import asyncio
-import datetime
+import urllib.parse as urlparse
+import sys, os, traceback
+import asyncio, datetime
 
 import discord
 from discord import Webhook, RequestsWebhookAdapter
@@ -20,16 +18,18 @@ def prefix(bot, message):
         return "!"
     
 token = os.getenv("DISCORD_BOT_TOKEN")
-bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
+apiKey = os.getenv("JSON_STORE_API")
 
-guildData = json.load(open("data.json", "r"))
+bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
+storeName = 'DiscordBot'
+
+guildData = (requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).json())
 
 extensions = [
     "cogs.levels",
     "cogs.moderation", 
     "cogs.minecraft"
   ]
-
 
 for extension in extensions:
     print(f"Loaded {extension}")
@@ -50,17 +50,14 @@ async def on_guild_join(guild):
 async def writeData():
     while True:
         await asyncio.sleep(10)
-        with open("data.json", "w") as f:
-            dumped = json.dumps(guildData)
-            f.write(dumped)
-            f.close()
+        res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=json.dumps(guildData))
 
 async def writeServer(bot):
     for guild in bot.guilds:
         try:
-            print(guildData[f'{guild.id}'])
+            print(guildData['data'][f'{guild.id}'])
         except KeyError:
-            guildData[f'{guild.id}'] = {
+            guildData['data'][f'{guild.id}'] = {
                 "serverName": f"{guild.name}",
                 "serverIcon": f"{guild.icon_url_as(format=None, static_format='png', size=1024)}",
                 "settings": {
@@ -78,8 +75,8 @@ async def writeServer(bot):
 async def embedSend(ctx, title, data, thumbnail):
     embed = discord.Embed(title=title, description=data, colour=discord.Colour.blue())
 
-    embed.set_author(name=f"{guildData[f'{ctx.channel.guild.id}']['serverName']}",
-                     icon_url=guildData[f'{ctx.channel.guild.id}']['serverIcon'])
+    embed.set_author(name=f"{guildData['data'][f'{ctx.channel.guild.id}']['serverName']}",
+                     icon_url=guildData['data'][f'{ctx.channel.guild.id}']['serverIcon'])
                      
     time = datetime.datetime.now()                  
     embed.set_footer(text=f"Sent by {ctx.author.name} at {time.strftime('%I:%M%p %x')}")
