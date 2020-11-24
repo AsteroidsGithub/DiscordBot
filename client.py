@@ -50,7 +50,7 @@ async def on_guild_join(guild):
 async def writeData():
     while True:
         await asyncio.sleep(10)
-        print(guildData)
+        print(f"Data:\n{guildData}")
         res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=json.dumps(guildData))
 
 async def writeServer(bot):
