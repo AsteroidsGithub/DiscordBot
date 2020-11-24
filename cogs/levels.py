@@ -33,8 +33,7 @@ class LevelsCog(commands.Cog):
         if lvl > level:
             await client.embedSend(ctx, "Level Up", f'Hello {ctx.author.name}, you have gone up to level {lvl}', ctx.author.avatar_url_as(format=None, static_format='png', size=1024))
             client.guildData['data'][f'{ctx.guild.id}']['levels'][f'{ctx.author.id}']['level'] = f"{lvl}"
-        else:
-            return
+        
         await client.writeData()
 
 

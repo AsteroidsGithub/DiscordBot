@@ -13,7 +13,7 @@ from discord.ext import commands
 def prefix(bot, message):
     id = message.guild.id
     try:
-        return guildData[f'{id}']['settings']['prefix']
+        return guildData['data'][f'{id}']['settings']['prefix']
     except KeyError:
         return "!"
     
