@@ -51,7 +51,7 @@ async def on_guild_join(guild):
 
 async def writeData():
     print(f"Saved Data:\n{guildData}")
-    res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=guildData)
+    res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=json.dumps(guildData))
 
 async def writeServer(bot):
     for guild in bot.guilds:
