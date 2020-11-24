@@ -23,8 +23,10 @@ apiKey = os.getenv("JSON_STORE_API")
 bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
 storeName = 'DiscordBot'
 
-dataLoad = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).content
-guildData = json.load(dataLoad)
+res = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).json()
+guildData = json.loads(res.text)
+
+print(guildData)
 
 extensions = [
     "cogs.levels",
@@ -52,7 +54,7 @@ async def writeData():
     while True:
         await asyncio.sleep(10)
         print(f"Data:\n{guildData}")
-        res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=json.dumps(guildData))
+        res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=guildData)
 
 async def writeServer(bot):
     for guild in bot.guilds:
