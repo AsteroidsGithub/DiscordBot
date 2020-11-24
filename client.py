@@ -44,17 +44,14 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name='whimplex.xyz on Minecraft 1.16.3'))
     
     await writeServer(bot)
-    await writeData()
 
 @bot.event
 async def on_guild_join(guild):
     writeServer()
 
 async def writeData():
-    while True:
-        await asyncio.sleep(10)
-        print(f"Data:\n{guildData}")
-        res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=guildData)
+    print(f"Saved Data:\n{guildData}")
+    res = requests.put(f'https://json.psty.io/api_v1/stores/{storeName}', headers={'Api-Key':f'{apiKey}','Content-Type':'application/json'}, data=guildData)
 
 async def writeServer(bot):
     for guild in bot.guilds:
@@ -75,7 +72,7 @@ async def writeServer(bot):
                 "levels": {
                 }
             }
-    
+            writeData()
 
 async def embedSend(ctx, title, data, thumbnail):
     embed = discord.Embed(title=title, description=data, colour=discord.Colour.blue())
