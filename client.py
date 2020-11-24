@@ -59,7 +59,7 @@ async def writeData():
 async def writeServer(bot):
     for guild in bot.guilds:
         try:
-            pass
+            print(guildData['data'][f'{guild.id}'])
         except KeyError:
             guildData['data'][f'{guild.id}'] = {
                 "serverName": f"{guild.name}",
