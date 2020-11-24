@@ -72,7 +72,7 @@ class moderationCog(commands.Cog):
                                None)
 
         client.guildData['data'][f'{ctx.guild.id}']['settings']['prefix'] = prefix
-        client.writeData()
+        await client.writeData()
 
     @commands.Cog.listener()
     async def on_member_join(self, ctx, member):

@@ -35,7 +35,7 @@ class LevelsCog(commands.Cog):
             client.guildData['data'][f'{ctx.guild.id}']['levels'][f'{ctx.author.id}']['level'] = f"{lvl}"
         else:
             return
-        client.writeData()
+        await client.writeData()
 
 
     @commands.command()

@@ -72,7 +72,7 @@ async def writeServer(bot):
                 "levels": {
                 }
             }
-            writeData()
+            await writeData()
 
 async def embedSend(ctx, title, data, thumbnail):
     embed = discord.Embed(title=title, description=data, colour=discord.Colour.blue())
