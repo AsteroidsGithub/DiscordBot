@@ -24,7 +24,7 @@ bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
 storeName = 'DiscordBot'
 
 dataLoad = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).content
-guildData = json.load(dataload)
+guildData = json.load(dataLoad)
 
 extensions = [
     "cogs.levels",
