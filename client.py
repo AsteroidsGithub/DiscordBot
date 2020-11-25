@@ -91,7 +91,8 @@ async def embedSend(ctx, type, title, data, thumbnail):
         embed.set_thumbnail(url=thumbnail)
 
     await ctx.channel.send(embed=embed)
-
+    
+@bot.event
 async def on_command_error(self, ctx, error):
     # get the original exception
     error = getattr(error, 'original', error)
