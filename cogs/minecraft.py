@@ -27,7 +27,7 @@ class minecraftCog(commands.Cog):
             for x in data['players']['list']:
                 strdata = strdata + f"\n{x}"
         
-        await client.embedSend(ctx, "Online Players", strdata, None)
+        await client.embedSend(ctx, "Info", "Online Players", strdata, None)
         strdata = ""
 
     @commands.command(name='mc')
@@ -36,9 +36,9 @@ class minecraftCog(commands.Cog):
         rcon = RCONClient(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip'], port=client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPort'])
         if rcon.login(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPassword']):
             resp = rcon.command(f"{command}")
-            await client.embedSend(ctx, "Minecraft Command Sent", f"sent '{command}' to the mc server", None)
+            await client.embedSend(ctx, "Good", "Minecraft Command Sent", f"sent '{command}' to the mc server", None)
         else:
-            await client.embedSend(ctx, "Minecraft Command Failed", f"failed to send '{command}' to the mc server", None)
+            await client.embedSend(ctx, "Error", "Minecraft Command Failed", f"failed to send '{command}' to the mc server", None)
 
 def setup(bot):
     bot.add_cog(minecraftCog(bot))

@@ -74,8 +74,15 @@ async def writeServer(bot):
             }
             await writeData()
 
-async def embedSend(ctx, title, data, thumbnail):
-    embed = discord.Embed(title=title, description=data, colour=0xff1100)
+async def embedSend(ctx, type, title, data, thumbnail):
+    if type == "Error":
+        color = 0xff1100
+    elif type == "Good":
+        color = 0x27db1d
+    elif type == "Info":
+        color = 0x008cff
+
+    embed = discord.Embed(title=title, description=data, colour=color)
 
     embed.set_author(name=f"{guildData['data'][f'{ctx.channel.guild.id}']['serverName']}",
                      icon_url=guildData['data'][f'{ctx.channel.guild.id}']['serverIcon'])

@@ -31,7 +31,7 @@ class LevelsCog(commands.Cog):
         lvl = len([x for x in levels if score > x])
 
         if lvl > level:
-            await client.embedSend(ctx, "Level Up", f'Hello {ctx.author.name}, you have gone up to level {lvl}', ctx.author.avatar_url_as(format=None, static_format='png', size=1024))
+            await client.embedSend(ctx,"Good", "Level Up", f'Hello {ctx.author.name}, you have gone up to level {lvl}', ctx.author.avatar_url_as(format=None, static_format='png', size=1024))
             client.guildData['data'][f'{ctx.guild.id}']['levels'][f'{ctx.author.id}']['level'] = f"{lvl}"
         
         await client.writeData()
@@ -42,7 +42,7 @@ class LevelsCog(commands.Cog):
         """Shows you or your friends level on this server"""
         member = member or ctx.author
 
-        await client.embedSend(ctx, f"{member.name}'s Level", f'Hello {member.name}, you have {client.guildData["data"][f"{ctx.guild.id}"]["levels"][f"{member.id}"]["score"]} points in total and are at level {client.guildData["data"][f"{ctx.guild.id}"]["levels"][f"{member.id}"]["level"]}', member.avatar_url_as(format=None, static_format='png', size=1024))
+        await client.embedSend(ctx, "Info", f"{member.name}'s Level", f'Hello {member.name}, you have {client.guildData["data"][f"{ctx.guild.id}"]["levels"][f"{member.id}"]["score"]} points in total and are at level {client.guildData["data"][f"{ctx.guild.id}"]["levels"][f"{member.id}"]["level"]}', member.avatar_url_as(format=None, static_format='png', size=1024))
 
 def setup(bot):
     bot.add_cog(LevelsCog(bot))
