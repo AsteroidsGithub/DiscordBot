@@ -17,7 +17,7 @@ class banCog(commands.Cog):
         reason = reason or "Reason not provided"
 
         if member == ctx.author:
-            await client.embedSend(ctx.channel, "Error",
+            await client.embedSend(ctx, "Error",
                                    "Woah, there!",
                                    f"{ctx.author.mention} You cannot ban yourself",
                                    member.avatar_url_as(format=None, static_format='png', size=1024))
