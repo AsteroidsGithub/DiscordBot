@@ -17,31 +17,10 @@ def prefix(bot, message):
     except KeyError:
         return "!"
     
-token = os.getenv("DISCORD_BOT_TOKEN")
-apiKey = os.getenv("JSON_STORE_API")
-
-bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
-storeName = 'DiscordBot'
-
-res = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).text
-guildData = json.loads(res)
-
-print(guildData)
-
-extensions = [
-    "cogs.levels",
-    "cogs.moderation", 
-    "cogs.minecraft"
-  ]
-
-for extension in extensions:
-    print(f"Loaded {extension}")
-    bot.load_extension(extension)
-
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Game(name='whimplex.xyz on Minecraft 1.16.3'))
+    await bot.change_presence(activity=discord.Game(name='Whimcraft.xyz'))
     
     await writeServer(bot)
 
@@ -93,5 +72,46 @@ async def embedSend(ctx, type, title, data, thumbnail):
         embed.set_thumbnail(url=thumbnail)
 
     await ctx.channel.send(embed=embed)
+
+async def on_command_error(self, ctx, error):
+    # get the original exception
+    error = getattr(error, 'original', error)
+    
+    if isinstance(error, commands.MissingPermissions):
+        missing =""
+        for perm in error.missing_perms:
+            print(perm)
+            missing = missing + f"{perm}\n"
+
+        embedSend(ctx, "Error", "Missing Permissions", f"You are mssing the following perms: \n{missing}", None)
+        return
+    
+    if isinstance(error, commands.MissingRequiredArgument):
+        missing =""
+        for argue in error.param:
+            print(argue)
+            missing = missing + f"{argue}\n"
+            
+        embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: \n{missing}", None)
+        return
+
+token = os.getenv("DISCORD_BOT_TOKEN")
+apiKey = os.getenv("JSON_STORE_API")
+
+bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
+storeName = 'DiscordBot'
+
+res = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).text
+guildData = json.loads(res)
+
+extensions = [
+    "cogs.levels",
+    "cogs.moderation", 
+    "cogs.minecraft"
+  ]
+
+for extension in extensions:
+    print(f"Loaded {extension}")
+    bot.load_extension(extension)
 
 bot.run(token)
