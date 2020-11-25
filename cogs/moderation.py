@@ -29,9 +29,7 @@ class moderationCog(commands.Cog):
                                f"I have banned {member.name} for {reason} it will last {str(time)}h",
                                member.avatar_url_as(format=None, static_format='png', size=1024))
 
-        dm = await member.create_dm()
-        await dm.send(messageok)
-
+        await member.send(messageok)
         await member.ban(reason=reason)
 
     @commands.command(name='unban')
@@ -42,13 +40,12 @@ class moderationCog(commands.Cog):
         link = await ctx.channel.create_invite(max_age=300)
         await ctx.guild.unban(member)
 
-        dm = await member.create_dm()
-        await dm.send(f"Hello {member.name}, you have been unbanned from {ctx.guild.name}. Welcome back here's a invite {link}")
-
         await client.embedSend(ctx,
                                 "Forgiveness is best",
                                 f"I have unbanned {member.name} because they are good",
                                 member.avatar_url_as(format=None, static_format='png', size=1024))
+        
+        await member.send(f"Hello {member.name}, you have been unbanned from {ctx.guild.name}. Welcome back here's a invite {link}")
 
     @commands.command(name='listrole')
     @commands.has_role("Developers")

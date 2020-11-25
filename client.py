@@ -75,7 +75,7 @@ async def writeServer(bot):
             await writeData()
 
 async def embedSend(ctx, title, data, thumbnail):
-    embed = discord.Embed(title=title, description=data, colour=discord.Colour.blue())
+    embed = discord.Embed(title=title, description=data, colour=0xff1100)
 
     embed.set_author(name=f"{guildData['data'][f'{ctx.channel.guild.id}']['serverName']}",
                      icon_url=guildData['data'][f'{ctx.channel.guild.id}']['serverIcon'])
