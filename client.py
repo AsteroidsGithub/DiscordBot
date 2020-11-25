@@ -16,7 +16,26 @@ def prefix(bot, message):
         return guildData['data'][f'{id}']['settings']['prefix']
     except KeyError:
         return "!"
-    
+
+token = os.getenv("DISCORD_BOT_TOKEN")
+apiKey = os.getenv("JSON_STORE_API")
+
+bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
+storeName = 'DiscordBot'
+
+res = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).text
+guildData = json.loads(res)
+
+extensions = [
+    "cogs.levels",
+    "cogs.moderation", 
+    "cogs.minecraft"
+  ]
+
+for extension in extensions:
+    print(f"Loaded {extension}")
+    bot.load_extension(extension)
+
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
@@ -94,24 +113,5 @@ async def on_command_error(self, ctx, error):
             
         embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: \n{missing}", None)
         return
-
-token = os.getenv("DISCORD_BOT_TOKEN")
-apiKey = os.getenv("JSON_STORE_API")
-
-bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
-storeName = 'DiscordBot'
-
-res = requests.get(f'https://json.psty.io/api_v1/stores/{urlparse.quote_plus(storeName)}', headers={'Api-Key':f'{apiKey}'}).text
-guildData = json.loads(res)
-
-extensions = [
-    "cogs.levels",
-    "cogs.moderation", 
-    "cogs.minecraft"
-  ]
-
-for extension in extensions:
-    print(f"Loaded {extension}")
-    bot.load_extension(extension)
 
 bot.run(token)
