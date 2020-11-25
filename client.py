@@ -29,7 +29,8 @@ guildData = json.loads(res)
 extensions = [
     "cogs.levels",
     "cogs.moderation", 
-    "cogs.minecraft"
+    "cogs.minecraft",
+    "cogs.ban"
   ]
 
 for extension in extensions:
@@ -91,28 +92,5 @@ async def embedSend(ctx, type, title, data, thumbnail):
         embed.set_thumbnail(url=thumbnail)
 
     await ctx.channel.send(embed=embed)
-    
-@bot.event
-async def on_command_error(self, ctx, error):
-    # get the original exception
-    error = getattr(error, 'original', error)
-    
-    if isinstance(error, commands.MissingPermissions):
-        missing =""
-        for perm in error.missing_perms:
-            print(perm)
-            missing = missing + f"{perm}\n"
-
-        embedSend(ctx, "Error", "Missing Permissions", f"You are mssing the following perms: \n{missing}", None)
-        return
-    
-    if isinstance(error, commands.MissingRequiredArgument):
-        missing =""
-        for argue in error.param:
-            print(argue)
-            missing = missing + f"{argue}\n"
-            
-        embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: \n{missing}", None)
-        return
 
 bot.run(token)
