@@ -50,23 +50,23 @@ class banCog(commands.Cog):
     @ban.error
     async def banError(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            client.embedSend(ctx, "Error", "Missing Permissions",
+            await client.embedSend(ctx, "Error", "Missing Permissions",
                     f"You are mssing the following permissions: `Ban Members`", None)
             return
 
         if isinstance(error, commands.MissingRequiredArgument):
-            client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <member> <time> <reason>", None)
+            await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <member> <time> <reason>", None)
             return
     
     @unban.error
     async def banError(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            client.embedSend(ctx, "Error", "Missing Permissions",
+            await client.embedSend(ctx, "Error", "Missing Permissions",
                     f"You are mssing the following permissions: `Ban Members` `Manage Members`", None)
             return
 
         if isinstance(error, commands.MissingRequiredArgument):
-            client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <id>", None)
+            await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <id>", None)
             return
 
 def setup(bot):
