@@ -31,7 +31,7 @@ class minecraftCog(commands.Cog):
         strdata = ""
 
     @commands.command(name='mc')
-    @commands.has_permissions(administrator=True)
+    # @commands.has_permissions(administrator=True)
     async def mc(self, ctx, *, command = None):
         """Sends commands to the Minecraft server"""
         rcon = RCONClient(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip'], port=client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPort'])
