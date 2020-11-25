@@ -11,7 +11,7 @@ class moderationCog(commands.Cog):
         self._last_member = None
 
     @commands.command(name='ban')
-    @commands.has_role('Developers')
+    @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, time, *, reason):
         """Ban naughty memebers of your server"""
         reason = reason or "Reason not provided"
@@ -33,7 +33,7 @@ class moderationCog(commands.Cog):
         await member.ban(reason=reason)
 
     @commands.command(name='unban')
-    @commands.has_role('Developers')
+    @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, id):
         member = await self.bot.fetch_user(id)
 
@@ -48,7 +48,7 @@ class moderationCog(commands.Cog):
         await member.send(f"Hello {member.name}, you have been unbanned from {ctx.guild.name}. Welcome back here's a invite {link}")
 
     @commands.command(name='listrole')
-    @commands.has_role("Developers")
+    @commands.has_permissions(manage_roles=True)
     async def listrole(self, ctx, *, role: discord.Role):
         """Show how many people have a given Role"""
         memberlist = ""
@@ -61,7 +61,7 @@ class moderationCog(commands.Cog):
                                None)
 
     @commands.command(name='setprefix')
-    @commands.has_role("Developers")
+    @commands.has_permissions(manage_guild=True)
     async def setprefix(self, ctx, *, prefix):
         """Changes the bot's prefix"""
         await client.embedSend(ctx, "Info", f"Prefix changed!",
@@ -70,11 +70,6 @@ class moderationCog(commands.Cog):
 
         client.guildData['data'][f'{ctx.guild.id}']['settings']['prefix'] = prefix
         await client.writeData()
-
-    @commands.Cog.listener()
-    async def on_member_join(self, ctx, member):
-        role = member.server.roles['Viewers']
-        await member.add_roles(member, role)
 
 def setup(bot):
     bot.add_cog(moderationCog(bot))
