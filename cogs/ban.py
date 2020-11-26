@@ -21,6 +21,7 @@ class Ban(commands.Cog):
                                    "Woah, there!",
                                    f"{ctx.author.mention} You cannot ban yourself",
                                    member.avatar_url_as(format=None, static_format='png', size=1024))
+            return
 
         messageok = f"You have been banned from {ctx.guild.name} for {reason}"
 
@@ -59,6 +60,7 @@ class Ban(commands.Cog):
                                    "Woah, there!",
                                    f"{ctx.author.mention} You cannot kick yourself",
                                    member.avatar_url_as(format=None, static_format='png', size=1024))
+            return
 
         messageok = f"You have been banned from {ctx.guild.name} for {reason}"
 
