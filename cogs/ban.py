@@ -82,7 +82,7 @@ class Ban(commands.Cog):
             return
     
     @unban.error
-    async def banError(self, ctx, error):
+    async def unbanError(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await client.embedSend(ctx, "Error", "Missing Permissions",
                     f"You are mssing the following permissions: `Ban Members` `Manage Members`", None)
@@ -90,6 +90,17 @@ class Ban(commands.Cog):
 
         if isinstance(error, commands.MissingRequiredArgument):
             await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <id>", None)
+            return
+
+    @unban.error
+    async def kickError(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await client.embedSend(ctx, "Error", "Missing Permissions",
+                    f"You are mssing the following permissions: `Kick Members`", None)
+            return
+
+        if isinstance(error, commands.MissingRequiredArgument):
+            await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <member>", None)
             return
 
 def setup(bot):
