@@ -16,16 +16,20 @@ class minecraftCog(commands.Cog):
     @commands.command(name='online')
     async def online(self, ctx, *, server=None):
         """Shows who's on the Minecraft server"""
-        server = client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip']
+        server = server or client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip']
 
         existing = await ctx.channel.webhooks()
 
         with urllib.request.urlopen(f"https://api.mcsrvstat.us/2/{server}") as url:
             data = json.loads(url.read().decode())
             strdata = f"The following people are playing on {server}\n"
-
-            for x in data['players']['list']:
-                strdata = strdata + f"\n{x}"
+            
+            try: 
+                for x in data['players']['list']:
+                    strdata = strdata + f"\n`{x}`"
+            except KeyError:
+                await client.embedSend(ctx, "Info", "Online Players", f"No one is playing on {server}", None)
+                return
         
         await client.embedSend(ctx, "Info", "Online Players", strdata, None)
         strdata = ""
