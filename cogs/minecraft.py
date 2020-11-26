@@ -44,6 +44,7 @@ class Minecraft(commands.Cog):
             await client.embedSend(ctx, "Good", "Minecraft Command Sent", f"sent '{command}' to the mc server", None)
         else:
             await client.embedSend(ctx, "Error", "Minecraft Command Failed", f"failed to send '{command}' to the mc server", None)
+        rcon.stop()
 
     @mc.error
     async def mcError(self, ctx, error):
