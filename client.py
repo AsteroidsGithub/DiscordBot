@@ -30,7 +30,8 @@ extensions = [
     "cogs.levels",
     "cogs.moderation", 
     "cogs.minecraft",
-    "cogs.ban"
+    "cogs.ban",
+    "cogs.settings"
   ]
 
 for extension in extensions:
