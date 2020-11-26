@@ -8,7 +8,7 @@ from discord.ext import commands, tasks
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-class minecraftCog(commands.Cog):
+class Minecraft(commands.Cog):
     def __init__(self, bot):
         self.bot = client.bot
         self._last_member = None
@@ -57,5 +57,5 @@ class minecraftCog(commands.Cog):
             return
 
 def setup(bot):
-    bot.add_cog(minecraftCog(bot))
+    bot.add_cog(Minecraft(bot))
 

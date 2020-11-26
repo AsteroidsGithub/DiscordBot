@@ -5,7 +5,7 @@ import urllib
 import discord
 from discord.ext import commands
 
-class banCog(commands.Cog):
+class Ban(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
@@ -26,15 +26,16 @@ class banCog(commands.Cog):
 
         await client.embedSend(ctx, "Good",
                                "Smashed with the Ban Hammer",
-                               f"I have banned {member.name} for {reason} it will last {str(time)}h",
+                               f"I have banned {member.name} for {reason}",
                                member.avatar_url_as(format=None, static_format='png', size=1024))
 
         await member.send(messageok)
         await member.ban(reason=reason)
-
+    
     @commands.command(name='unban')
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, id):
+        """Forgives naughty memebers of your server"""
         member = await self.bot.fetch_user(id)
 
         link = await ctx.channel.create_invite(max_age=300)
@@ -46,6 +47,28 @@ class banCog(commands.Cog):
                                 member.avatar_url_as(format=None, static_format='png', size=1024))
 
         await member.send(f"Hello {member.name}, you have been unbanned from {ctx.guild.name}. Welcome back here's a invite {link}")
+
+    @commands.command(name='kick')
+    @commands.has_permissions(kick_members=True)
+    async def kick(self, ctx, member: discord.Member, *, reason=None):
+        """Kicks naughty memebers out of your server"""
+        reason = reason or "Reason not provided"
+
+        if member == ctx.author:
+            await client.embedSend(ctx, "Error",
+                                   "Woah, there!",
+                                   f"{ctx.author.mention} You cannot kick yourself",
+                                   member.avatar_url_as(format=None, static_format='png', size=1024))
+
+        messageok = f"You have been banned from {ctx.guild.name} for {reason}"
+
+        await client.embedSend(ctx, "Good",
+                               "Kicked out the Server",
+                               f"I have banned {member.name} for {reason}",
+                               member.avatar_url_as(format=None, static_format='png', size=1024))
+
+        await member.send(messageok)
+        await member.kick(reason=reason)
 
     @ban.error
     async def banError(self, ctx, error):
@@ -70,4 +93,4 @@ class banCog(commands.Cog):
             return
 
 def setup(bot):
-    bot.add_cog(banCog(bot))
+    bot.add_cog(Ban(bot))

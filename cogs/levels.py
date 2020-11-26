@@ -5,7 +5,7 @@ import urllib
 import discord
 from discord.ext import commands
 
-class LevelsCog(commands.Cog):
+class Leveling(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
@@ -45,4 +45,4 @@ class LevelsCog(commands.Cog):
         await client.embedSend(ctx, "Info", f"{member.name}'s Level", f'Hello {member.name}, you have {client.guildData["data"][f"{ctx.guild.id}"]["levels"][f"{member.id}"]["score"]} points in total and are at level {client.guildData["data"][f"{ctx.guild.id}"]["levels"][f"{member.id}"]["level"]}', member.avatar_url_as(format=None, static_format='png', size=1024))
 
 def setup(bot):
-    bot.add_cog(LevelsCog(bot))
+    bot.add_cog(Leveling(bot))

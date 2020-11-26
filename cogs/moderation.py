@@ -5,7 +5,7 @@ import urllib
 import discord
 from discord.ext import commands
 
-class moderationCog(commands.Cog):
+class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
@@ -37,4 +37,4 @@ class moderationCog(commands.Cog):
         await client.writeData()
 
 def setup(bot):
-    bot.add_cog(moderationCog(bot))
+    bot.add_cog(Moderation(bot))
