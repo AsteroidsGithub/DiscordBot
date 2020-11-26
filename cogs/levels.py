@@ -27,7 +27,7 @@ class Leveling(commands.Cog):
 
         client.guildData['data'][f'{ctx.guild.id}']['levels'][f'{ctx.author.id}'] = {"name":f"{ctx.author.name}", "score":f"{score}", "level":F"{level}"}
 
-        levels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 250, 500]
+        levels = [30, 50, 100, 200, 500, 1000, 2000, 3000, 5000, 10000]
         lvl = len([x for x in levels if score > x])
 
         if lvl > level:
