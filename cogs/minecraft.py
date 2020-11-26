@@ -36,7 +36,7 @@ class minecraftCog(commands.Cog):
 
     @commands.command(name='mc')
     # @commands.has_permissions(administrator=True)
-    async def mc(self, ctx, *, command = None):
+    async def mc(self, ctx, *, command):
         """Sends commands to the Minecraft server"""
         rcon = RCONClient(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['ip'], port=client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPort'])
         if rcon.login(client.guildData['data'][f'{ctx.guild.id}']['settings']['minecraft']['rconPassword']):
@@ -44,6 +44,17 @@ class minecraftCog(commands.Cog):
             await client.embedSend(ctx, "Good", "Minecraft Command Sent", f"sent '{command}' to the mc server", None)
         else:
             await client.embedSend(ctx, "Error", "Minecraft Command Failed", f"failed to send '{command}' to the mc server", None)
+
+    @mc.error
+    async def mcError(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await client.embedSend(ctx, "Error", "Missing Permissions",
+                    f"You are mssing the following permissions: `Administrator`", None)
+            return
+
+        if isinstance(error, commands.MissingRequiredArgument):
+            await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: `<command>`", None)
+            return
 
 def setup(bot):
     bot.add_cog(minecraftCog(bot))

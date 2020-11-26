@@ -12,7 +12,7 @@ class banCog(commands.Cog):
 
     @commands.command(name='ban')
     @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, member: discord.Member, time, *, reason):
+    async def ban(self, ctx, member: discord.Member, *, reason=None):
         """Ban naughty memebers of your server"""
         reason = reason or "Reason not provided"
 
@@ -55,7 +55,7 @@ class banCog(commands.Cog):
             return
 
         if isinstance(error, commands.MissingRequiredArgument):
-            await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <member> <time> <reason>", None)
+            await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: `<member>`", None)
             return
     
     @unban.error
