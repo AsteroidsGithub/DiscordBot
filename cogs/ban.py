@@ -94,7 +94,7 @@ class Ban(commands.Cog):
             await client.embedSend(ctx, "Error", "Missing Arguments", f"You are mssing the following arguments: <id>", None)
             return
 
-    @unban.error
+    @kick.error
     async def kickError(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await client.embedSend(ctx, "Error", "Missing Permissions",
