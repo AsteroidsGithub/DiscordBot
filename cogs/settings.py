@@ -6,9 +6,9 @@ import discord
 from discord.ext import commands
 
 class Settings(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        self._last_member = None
+      def __init__(self, bot):
+          self.bot = bot
+          self._last_member = None
 
       @commands.command()
       async def ping(self, ctx):
