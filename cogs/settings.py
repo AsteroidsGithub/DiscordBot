@@ -12,7 +12,7 @@ class Settings(commands.Cog):
 
       @commands.command()
       async def ping(self, ctx):
-          await ctx.send(f'Pong! {round(client.latency, 1)}')
+          await ctx.send(f'Pong! {round(self.bot.latency, 1)}ms')
   
       @commands.has_permissions(manage_guild=True)
       @commands.group()
