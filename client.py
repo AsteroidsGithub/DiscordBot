@@ -31,7 +31,8 @@ extensions = [
     "cogs.moderation", 
     "cogs.minecraft",
     "cogs.ban",
-    "cogs.settings"
+    "cogs.settings",
+    "cogs.tickets"
   ]
 
 for extension in extensions:
@@ -72,7 +73,7 @@ async def writeServer(bot):
                 "levels": {
                 },
                 "tickets": {
-                    
+
                 }
 
             }
