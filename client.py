@@ -70,7 +70,11 @@ async def writeServer(bot):
                     "prefix": "!"
                 },
                 "levels": {
+                },
+                "tickets": {
+                    
                 }
+
             }
             await writeData()
 

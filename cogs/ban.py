@@ -62,7 +62,7 @@ class Ban(commands.Cog):
                                    member.avatar_url_as(format=None, static_format='png', size=1024))
             return
 
-        messageok = f"You have been banned from {ctx.guild.name} for {reason}"
+        messageok = f"You have been kicked from {ctx.guild.name} for {reason}"
 
         await client.embedSend(ctx, "Good",
                                "Kicked out the Server",
