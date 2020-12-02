@@ -18,7 +18,10 @@ class Tickets(commands.Cog):
     
     @ticket.command()
     async def open(self, ctx, *, name = None):
-        size = str(f"{len(client.guildData['data'][f'{ctx.guild.id}']['tickets']) + 1}")
+        try:
+            size = str(f"{len(client.guildData['data'][f'{ctx.guild.id}']['tickets']) + 1}")
+        except KeyError:
+            size = 0
         guild = ctx.guild
         name = name or f"ticket-{size}"
 
