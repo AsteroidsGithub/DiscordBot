@@ -16,7 +16,7 @@ class Tickets(commands.Cog):
             await client.embedSend(ctx, "Error", "Missing Sub-Command",
                     f"You are mssing a sub command", None)
     
-    @set.command()
+    @ticket.command()
     async def open(self, ctx, *, name = None):
         size = str(f"{len(client.guildData['data'][f'{ctx.guild.id}']['tickets']) + 1}")
         guild = ctx.guild
