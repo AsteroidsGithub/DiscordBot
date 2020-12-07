@@ -116,7 +116,7 @@ async def embedpages(ctx):
         description='Description',
         colour=discord.Colour.orange()
     )
-    reactions = ['\u23ee', '\u25c0', '\u25b6', '\u23ed']
+    reactions = ['⏮', '◀', '\u25b6', '\u23ed']
 
     pages=[page1,page2,page3]
 
