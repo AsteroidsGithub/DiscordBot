@@ -127,7 +127,8 @@ async def embedpages(ctx):
 
     i=1
     while True:
-        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == reactions[0])
+        reaction, user = await bot.wait_for('reaction_add')
+        print(reaction + user)
         i=0
         await message.edit(embed=pages[i])
         break
