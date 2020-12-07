@@ -128,28 +128,27 @@ async def embedpages(ctx):
 
     i=0
     while True:
-        try:
-            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ee')
-            i=0
+        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ee')
+        i=0
+        await message.edit(embed=pages[i])
+        break
+
+        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25c0')
+        if i>0:
+            i-=1
             await message.edit(embed=pages[i])
-            break
-        try:
-            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25c0')
-            if i>0:
-                i-=1
-                await message.edit(embed=pages[i])
-            break
-        try:
-            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25b6')
-            if i<2:
-                i+=1
-                await message.edit(embed=pages[i])
-            break
-        try:
-            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ed')
-            i=2
+        break
+
+        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25b6')
+        if i<2:
+            i+=1
             await message.edit(embed=pages[i])
-            break
+        break
+    
+        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ed')
+        i=2
+        await message.edit(embed=pages[i])
+        break
 
     await bot.clear_reactions(message)
 
