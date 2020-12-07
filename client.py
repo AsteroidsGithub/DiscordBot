@@ -130,7 +130,7 @@ async def embedpages(ctx):
         reaction, user = await bot.wait_for('reaction_add')
         print(reaction)
 
-        if user.bot:
+        if user.bot == True:
             return
 
         if reaction.emoji == reactions[0]:
