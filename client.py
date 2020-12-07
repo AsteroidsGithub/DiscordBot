@@ -146,13 +146,6 @@ async def embedpages(ctx):
             i=2
             await message.edit(embed=pages[i])
 
-        res=await bot.wait_for_reaction(message=message,timeout=30)
-        if res==None:
-            break
-        if str(res[1])!='<Bots name goes here>': #Example: 'MyBot#1111'
-            emoji=str(res[0].emoji)
-            await bot.remove_reaction(message,res[0].emoji,res[1])
-
     await bot.clear_reactions(message)
 
 bot.run(token)
