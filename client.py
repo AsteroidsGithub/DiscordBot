@@ -128,8 +128,9 @@ async def embedpages(ctx):
 
     i=0
 
+    emoji= await bot.wait_for('reaction_add')
     while True:
-        emoji= await bot.wait_for('reaction_add')
+        print("ready")
 
         if emoji=='\u23ee':
             i=0
