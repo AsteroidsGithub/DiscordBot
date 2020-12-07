@@ -99,4 +99,59 @@ async def embedSend(ctx, type, title, data, thumbnail):
 
     await ctx.channel.send(embed=embed)
 
+@bot.command()
+async def embedpages():
+    page1=discord.Embed(
+        title='Page 1/3',
+        description='Description',
+        colour=discord.Colour.orange()
+    )
+    page2=discord.Embed(
+        title='Page 2/3',
+        description='Description',
+        colour=discord.Colour.orange()
+    )
+    page3=discord.Embed(
+        title='Page 3/3',
+        description='Description',
+        colour=discord.Colour.orange()
+    )
+
+    pages=[page1,page2,page3]
+
+    message=await bot.say(embed=page1)
+
+    await bot.add_reaction(message,'\u23ee')
+    await bot.add_reaction(message,'\u25c0')
+    await bot.add_reaction(message,'\u25b6')
+    await bot.add_reaction(message,'\u23ed')
+
+    i=0
+    emoji=''
+
+    while True:
+        if emoji=='\u23ee':
+            i=0
+            await bot.edit_message(message,embed=pages[i])
+        if emoji=='\u25c0':
+            if i>0:
+                i-=1
+                await bot.edit_message(message,embed=pages[i])
+        if emoji=='\u25b6':
+            if i<2:
+                i+=1
+                await bot.edit_message(message,embed=pages[i])
+        if emoji=='\u23ed':
+            i=2
+            await bot.edit_message(message,embed=pages[i])
+
+        res=await bot.wait_for_reaction(message=message,timeout=30)
+        if res==None:
+            break
+        if str(res[1])!='<Bots name goes here>': #Example: 'MyBot#1111'
+            emoji=str(res[0].emoji)
+            await bot.remove_reaction(message,res[0].emoji,res[1])
+
+    await bot.clear_reactions(message)
+
 bot.run(token)
