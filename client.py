@@ -42,7 +42,7 @@ for extension in extensions:
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Game(name='Whimcraft.xyz'))
+    await bot.change_presence(activity=discord.Streaming(name='Whimcraft.xyz', platform='Youtube', game='Minecraft 1.16.3', url='lol.com'))
     
     await writeServer(bot)
 
@@ -127,23 +127,29 @@ async def embedpages(ctx):
     await message.add_reaction('\u23ed')
 
     i=0
-
-    reaction, user = await bot.wait_for('reaction_add')
     while True:
-        if reaction=='\u23ee':
+        try:
+            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ee')
             i=0
             await message.edit(embed=pages[i])
-        if reaction=='\u25c0':
+            break
+        try:
+            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25c0')
             if i>0:
                 i-=1
                 await message.edit(embed=pages[i])
-        if reaction=='\u25b6':
+            break
+        try:
+            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25b6')
             if i<2:
                 i+=1
                 await message.edit(embed=pages[i])
-        if reaction=='\u23ed':
+            break
+        try:
+            reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ed')
             i=2
             await message.edit(embed=pages[i])
+            break
 
     await bot.clear_reactions(message)
 
