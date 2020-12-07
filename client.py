@@ -128,22 +128,20 @@ async def embedpages(ctx):
 
     i=0
 
-    emoji= await bot.wait_for('reaction_add')
+    reaction, user = await bot.wait_for('reaction_add')
     while True:
-        print("ready")
-
-        if emoji=='\u23ee':
+        if reaction=='\u23ee':
             i=0
             await message.edit(embed=pages[i])
-        if emoji=='\u25c0':
+        if reaction=='\u25c0':
             if i>0:
                 i-=1
                 await message.edit(embed=pages[i])
-        if emoji=='\u25b6':
+        if reaction=='\u25b6':
             if i<2:
                 i+=1
                 await message.edit(embed=pages[i])
-        if emoji=='\u23ed':
+        if reaction=='\u23ed':
             i=2
             await message.edit(embed=pages[i])
 
