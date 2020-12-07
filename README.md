@@ -1,5 +1,5 @@
 # Ruby - A Minecraft Focused Discord Bot
-![Discord](https://img.shields.io/discord/741179371779522834?label=Discord%20Support) ![GitHub last commit](https://img.shields.io/github/last-commit/AsteroidsGithub/Ruby) ![GitHub issues](https://img.shields.io/github/issues/AsteroidsGithub/Ruby)
+![Discord](https://img.shields.io/discord/741179371779522834?label=Discord%20Support) ![GitHub last commit](https://img.shields.io/github/last-commit/AsteroidsGithub/Ruby) ![GitHub issues](https://img.shields.io/github/issues/AsteroidsGithub/Ruby) ![Lines of code](https://img.shields.io/tokei/lines/github/asteroidsgithub/ruby) ![Language](https://img.shields.io/badge/Language-Python-blue) ![Made with](https://img.shields.io/badge/Made%20with-♥%20By%20Developers-orange)
 
 Ruby is an all in one **Minecraft focused Discord bot** written in **Python** using [discord.py](https://github.com/Rapptz/discord.py)
 ## Features
