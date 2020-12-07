@@ -119,14 +119,14 @@ async def embedpages(ctx):
 
     pages=[page1,page2,page3]
 
-    message=await ctx.channel.send(embed=page1)
+    message=await ctx.channel.send(embed=page2)
 
     await message.add_reaction('\u23ee')
     await message.add_reaction('\u25c0')
     await message.add_reaction('\u25b6')
     await message.add_reaction('\u23ed')
 
-    i=0
+    i=1
     while True:
         reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ee')
         i=0
@@ -144,7 +144,7 @@ async def embedpages(ctx):
             i+=1
             await message.edit(embed=pages[i])
         break
-    
+
         reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ed')
         i=2
         await message.edit(embed=pages[i])
