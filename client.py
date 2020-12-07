@@ -116,18 +116,18 @@ async def embedpages(ctx):
         description='Description',
         colour=discord.Colour.orange()
     )
-    reaction = ['\u23ee', '\u25c0', '\u25b6', '\u23ed']
+    reactions = ['\u23ee', '\u25c0', '\u25b6', '\u23ed']
 
     pages=[page1,page2,page3]
 
     message=await ctx.channel.send(embed=page2)
 
-    for emoji in reaction:
+    for emoji in reactions:
         await message.add_reaction(emoji)
 
     i=1
     while True:
-        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == reaction)
+        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == reactions[0])
         i=0
         await message.edit(embed=pages[i])
         break
