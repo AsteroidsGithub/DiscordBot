@@ -100,7 +100,7 @@ async def embedSend(ctx, type, title, data, thumbnail):
     await ctx.channel.send(embed=embed)
 
 @bot.command()
-async def embedpages():
+async def embedpages(ctx):
     page1=discord.Embed(
         title='Page 1/3',
         description='Description',
@@ -119,7 +119,7 @@ async def embedpages():
 
     pages=[page1,page2,page3]
 
-    message=await bot.say(embed=page1)
+    message=await ctx.channel.send(embed=page1)
 
     await bot.add_reaction(message,'\u23ee')
     await bot.add_reaction(message,'\u25c0')
