@@ -121,10 +121,10 @@ async def embedpages(ctx):
 
     message=await ctx.channel.send(embed=page1)
 
-    await bot.add_reaction(message,'\u23ee')
-    await bot.add_reaction(message,'\u25c0')
-    await bot.add_reaction(message,'\u25b6')
-    await bot.add_reaction(message,'\u23ed')
+    await message.add_reaction('\u23ee')
+    await message.add_reaction('\u25c0')
+    await message.add_reaction('\u25b6')
+    await message.add_reaction('\u23ed')
 
     i=0
     emoji=''
