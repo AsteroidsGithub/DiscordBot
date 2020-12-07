@@ -128,6 +128,7 @@ async def embedpages(ctx):
     i=1
     while True:
         reaction, user = await bot.wait_for('reaction_add')
+        print(reaction)
 
         if reaction == reactions[0]:
             i=0
