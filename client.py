@@ -128,28 +128,22 @@ async def embedpages(ctx):
     i=1
     while True:
         reaction, user = await bot.wait_for('reaction_add')
-        print(reaction)
-        print(user)
-        i=0
-        await message.edit(embed=pages[i])
-        break
 
-        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25c0')
-        if i>0:
-            i-=1
+        if reaction == reactions[0]:
+            i=0
+            await message.edit(embed=pages[i])    
+        elif reaction == reactions[1]:
+            if i>0:
+                i-=1
+                await message.edit(embed=pages[i])
+        elif reaction == reactions[2]:
+            if i<2:
+                i+=1
+                await message.edit(embed=pages[i])
+        elif reaction == reactions[3]:
+            i=2
             await message.edit(embed=pages[i])
-        break
-
-        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u25b6')
-        if i<2:
-            i+=1
-            await message.edit(embed=pages[i])
-        break
-
-        reaction, user = await bot.wait_for('reaction_add',  check=lambda reaction, user: reaction.emoji == '\u23ed')
-        i=2
-        await message.edit(embed=pages[i])
-        break
+        
 
     await bot.clear_reactions(message)
 
