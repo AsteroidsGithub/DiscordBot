@@ -132,18 +132,22 @@ async def embedpages(ctx):
 
         if reaction.emoji == reactions[0]:
             i=0
-            await message.edit(embed=pages[i])    
+            await message.edit(embed=pages[i])
+            await message.remove_reaction(reaction, user)
         elif reaction.emoji == reactions[1]:
             if i>0:
                 i-=1
                 await message.edit(embed=pages[i])
+                await message.remove_reaction(reaction, user)
         elif reaction.emoji == reactions[2]:
             if i<2:
                 i+=1
                 await message.edit(embed=pages[i])
+                await message.remove_reaction(reaction, user)
         elif reaction.emoji == reactions[3]:
             i=2
             await message.edit(embed=pages[i])
+            await message.remove_reaction(reaction, user)
         
 
     await bot.clear_reactions(message)
