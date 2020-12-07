@@ -127,24 +127,24 @@ async def embedpages(ctx):
     await message.add_reaction('\u23ed')
 
     i=0
-    
+
     while True:
         emoji= await client.wait_for('reaction_add')
 
         if emoji=='\u23ee':
             i=0
-            await bot.edit_message(message,embed=pages[i])
+            await message.edit(embed=pages[i])
         if emoji=='\u25c0':
             if i>0:
                 i-=1
-                await bot.edit_message(message,embed=pages[i])
+                await message.edit(embed=pages[i])
         if emoji=='\u25b6':
             if i<2:
                 i+=1
-                await bot.edit_message(message,embed=pages[i])
+                await message.edit(embed=pages[i])
         if emoji=='\u23ed':
             i=2
-            await bot.edit_message(message,embed=pages[i])
+            await message.edit(embed=pages[i])
 
         res=await bot.wait_for_reaction(message=message,timeout=30)
         if res==None:
