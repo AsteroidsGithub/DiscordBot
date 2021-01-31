@@ -42,7 +42,7 @@ for extension in extensions:
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Streaming(name='Whimcraft.xyz', platform='Youtube', game='Minecraft 1.16.3', url='lol.com'))
+    await bot.change_presence(activity=discord.CustomActivity(name='Policing OutpostMC' emoji=':police_officer:'))
     
     await writeServer(bot)
 
