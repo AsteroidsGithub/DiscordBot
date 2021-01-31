@@ -13,9 +13,9 @@ class Moderation(commands.Cog):
     @commands.command(name='plog')
     @commands.has_permissions(manage_roles=True)
     async def plog(self, ctx, user: discord.User, time: int, reason, *, evidence): 
-        await client.embedSend(ctx,"Info", f"Punishment Log: {user.name}",
-                               f'The following {user}, {time}, {reason}, {evidence}',
-                               None)
+        await client.embedSend(ctx,type="Info", title=f"Punishment Log: {user.name}",
+                               data=f'The following {user}, {time}, {reason}, {evidence}',
+                               thumbnail=None, image=evidence)
 
     @commands.command(name='listrole')
     @commands.has_permissions(manage_roles=True)

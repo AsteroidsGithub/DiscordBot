@@ -79,8 +79,10 @@ async def writeServer(bot):
             }
             await writeData()
 
-async def embedSend(ctx, type, title, data, thumbnail):
-
+async def embedSend(ctx, type = none, title, data, thumbnail, image=none):
+    type = type or "Info"
+    image = image or None
+    
     if type == "Error":
         color = 0xff1100
     elif type == "Good":
@@ -92,6 +94,8 @@ async def embedSend(ctx, type, title, data, thumbnail):
 
     embed.set_author(name=f"{guildData['data'][f'{ctx.channel.guild.id}']['serverName']}",
                      icon_url=guildData['data'][f'{ctx.channel.guild.id}']['serverIcon'])
+    
+    embed.set_image(image)
                      
     time = datetime.datetime.now()                  
     embed.set_footer(text=f"Sent by {ctx.author.name} at {time.strftime('%I:%M%p %x')}")
