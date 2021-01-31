@@ -42,7 +42,7 @@ for extension in extensions:
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.CustomActivity(name='Policing OutpostMC', emoji=':police_officer:'))
+    await bot.change_presence(activity=discord.CustomActivity(name='Policing OutpostMC'))
     
     await writeServer(bot)
 
