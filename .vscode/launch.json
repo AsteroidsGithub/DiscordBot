@@ -8,8 +8,12 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
+            "program": "client.py",
+            "console": "integratedTerminal",
+            "env": {
+                "DISCORD_BOT_TOKEN": "NzM5OTk2NTg1NTM0MDI5ODI0.Xyilhg.ZnrfIDZtS-LwVble9vaLqB6WVAg",
+                "JSON_STORE_API": "a70e380e-e259-498e-88d9-28b82043fde9"
+            }
         }
     ]
 }
