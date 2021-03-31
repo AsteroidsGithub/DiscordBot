@@ -1,9 +1,7 @@
 import os
 import sys
 import traceback
-
 import asyncio
-
 
 import discord
 from discord import Webhook, RequestsWebhookAdapter
@@ -18,7 +16,7 @@ bot = commands.Bot(command_prefix="r!", intents=discord.Intents.all())
 discord_data = store.Data(bot, "DiscordBot", api_key)
 
 def init():
-    for ext in ['cogs.setup','cogs.msuic', 'cogs.minecraft', 'cogs.fun']:
+    for ext in ['cogs.setup', 'cogs.minecraft', 'cogs.fun']:
         bot.load_extension(ext)
         print(f"{ext} Has been loaded.")
         
