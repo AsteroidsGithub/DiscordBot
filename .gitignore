@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # VS Code Configs
-.vscode/launch.json
+.vscode
 
 # C extensions
 *.so
